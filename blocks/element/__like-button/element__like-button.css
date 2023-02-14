@@ -9,13 +9,14 @@
   background-repeat: no-repeat;
   background-color: #ffffff;
   border-style: none;
-}
-
-.element__like-button:hover {
-  background-image: url(/images/icons/like-icon_hover.svg);
   cursor: pointer;
 }
 
+.element__like-button:hover {
+  opacity: 0.5;
+}
+
 .element__like-button:active {
+  opacity: 1;
   background-image: url(/images/icons/like-icon_active.svg);
 }
