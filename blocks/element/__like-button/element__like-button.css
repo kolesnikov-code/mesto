@@ -5,7 +5,7 @@
   margin-top: 6px;
   width: 22px;
   height: 19px;
-  background-image: url(/images/icons/like-icon.svg);
+  background-image: url(../../../images/icons/like-icon.svg);
   background-repeat: no-repeat;
   background-color: #ffffff;
   border-style: none;
@@ -18,5 +18,5 @@
 
 .element__like-button:active {
   opacity: 1;
-  background-image: url(/images/icons/like-icon_active.svg);
+  background-image: url(../../../images/icons/like-icon_active.svg);
 }
