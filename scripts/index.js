@@ -23,4 +23,5 @@ editCloseButton.addEventListener('click', function () {
 editSaveButton.addEventListener('click', function () {
   userName.textContent = inputUserName.value;
   aboutSelf.textContent = inputAboutSelf.value;
+  popup.classList.remove('popup_opened');
 });
