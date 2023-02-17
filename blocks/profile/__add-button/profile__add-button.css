@@ -6,7 +6,7 @@
   height: 50px;
   box-sizing: border-box;
   background-color: #000000;
-  background-image: url(/images/icons/add-button-plus.svg);
+  background-image: url(./images/icons/add-button-plus.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 22px 22px;
