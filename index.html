@@ -7,20 +7,18 @@
     <title>Mesto</title>
     <link rel="stylesheet" href="pages/index.css" />
   </head>
+
   <body class="page">
     <div class="popup">
-      <form class="popup__container" name="editForm">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__input popup__input_edit_name" name="name" type="text" value="" />
-        <input
-          class="popup__input popup__input_edit_about-self"
-          name="about-self"
-          type="text"
-          value=""
-        />
-        <button class="popup__edit-button-save" type="submit">Сохранить</button>
-        <button class="popup__edit-button-close" type="button"></button>
-      </form>
+      <div class="popup__container">
+        <form class="popup__form" name="editForm">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <input class="popup__input popup__input_edit_name" name="name" type="text" value="" />
+          <input class="popup__input popup__input_edit_about-self" name="about-self" type="text" value="" />
+          <button class="popup__edit-button-save" type="submit">Сохранить</button>
+          <button class="popup__edit-button-close" type="button"></button>
+        </form>
+      </div>
     </div>
 
     <header class="header">
