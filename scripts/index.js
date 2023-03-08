@@ -28,12 +28,30 @@ const initialCards = [
   }
 ];
 
-
 const elementsContainer = document.querySelector('.elements');
-
 function createNewElement() {
   const elementTemplate = document.querySelector('#element-template').content;
   const element = elementTemplate.querySelector('.element').cloneNode(true);
+
+
+  const buttonsDeleteElement = element.querySelectorAll('.element__delete-button');
+  buttonsDeleteElement.forEach((deleteButton) => {
+    deleteButton.addEventListener('click', function() {
+      console.log('delete');
+      const forDeleteElement = deleteButton.closest('.element');
+      forDeleteElement.remove();
+    });
+  });
+
+
+  const buttonsLikeElement = element.querySelectorAll('.element__like-button');
+  buttonsLikeElement.forEach((likeButton) => {
+    likeButton.addEventListener('click', function() {
+      console.log('like');
+      element.classList.toggle('element__like-button_active');
+    });
+  });
+
 
   return element;
 };
@@ -45,18 +63,13 @@ initialCards.forEach(function(item) {
   elementImage.src = item.link;
   elementImage.alt = item.name;
   elementTitle.textContent = item.name;
-  
   elementsContainer.append(newElement);
 });
 
 
 
-
-
-
-
-
-// 2 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP ДЛЯ РЕДАКТИРОВАНИЯ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
+// 4 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
+// ДЛЯ РЕДАКТИРОВАНИЯ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
 
 let popupEditUserInfo = document.querySelector('#popup-edit-user-info'); // получить доступ к блоку POPUP
 let formEditUserInfo = document.querySelector('#popup-container-edit-user-info'); // получить доступ к блоку POPUP
@@ -89,7 +102,7 @@ formEditUserInfo.addEventListener('submit', editUserInfoFormSubmit); // полу
 
 
 
-// 3 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
+// 5 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
 // ДЛЯ РЕДАКТИРОВАНИЯ УЖЕ ДОБАВЛЕННЫХ НА СТРАНИЦУ КАРТОЧЕК С ФОТОГРАФИЯМИ
 
 let popupAddNewItem = document.querySelector('#popup-add-new-item'); // получить доступ к блоку POPUP
@@ -109,13 +122,24 @@ function addNewItemFormClose() { // функция закрывает форму
 };
 function addNewItemFormSubmit(evt) { // функция добавляет новые текстовые данные на страницу и закрывает форму
   evt.preventDefault();
-  elementTitle.textContent = itemTitle.value; // добавляет новые текстовые данные из поля ввода 
-  elementImage.src = itemImageLink.value; // добавляет новые текстовые данные из поля ввода 
-  elementImage.alt = itemTitle.value; // добавляет новые текстовые данные в поле атрибут alt
+
+  const newElement = createNewElement();
+  const elementImage = newElement.querySelector('.element__image');
+  const elementTitle = newElement.querySelector('.element__title');
+  elementImage.src = itemImageLink.value;
+  elementImage.alt = itemTitle.value;
+  elementTitle.textContent = itemTitle.value;
+  elementsContainer.prepend(newElement);
+
   itemTitle.value = '';
   itemImageLink.value = '';
+  
   addNewItemFormClose(); // вызывает функцию закрытия формы
 };
+
 buttonAddNewItemOpen.addEventListener('click', addNewItemFormOpen); // добавить слушатель к кнопке РЕДАКТИРОВАТЬ
 buttonAddNewItemClose.addEventListener('click', addNewItemFormClose); // добавить слушатель к кнопке ЗАКРЫТЬ
 formAddNewItem.addEventListener('submit', addNewItemFormSubmit); // добавить слушатель к форме (на кнопку сохранить и ввод клавишей Enter)
+
+
+
