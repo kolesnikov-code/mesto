@@ -7,28 +7,33 @@
     <title>Mesto</title>
     <link rel="stylesheet" href="pages/index.css" />
   </head>
-
   <body class="page">
-    <div class="popup">
-      <div class="popup__container">
-        <form class="popup__form" name="editForm">
+
+
+
+
+    <div class="popup" id="popup-edit-user-info">
+      <div class="popup__container" id="popup-container-edit-user-info">
+        <form class="popup__form" name="editUserInfoForm">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input class="popup__input popup__input_edit_name" name="name" type="text" value="" />
-          <input class="popup__input popup__input_edit_about-self" name="about-self" type="text" value="" />
-          <button class="popup__edit-button-save" type="submit">Сохранить</button>
-          <button class="popup__edit-button-close" type="button"></button>
+          <input class="popup__input" id="popup-input-value-username" name="username" type="text" value="" />
+          <input class="popup__input" id="popup-input-value-about-self" name="about-self" type="text" value="" />
+          <button class="popup__button-save" id="popup-edit-user-info-button-save" type="submit">Сохранить</button>
+          <button class="popup__button-close" id="popup-edit-user-info-button-close" type="button"></button>
         </form>
       </div>
     </div>
 
-    <div class="popup">
-      <div class="popup__container">
-        <form class="new-item__form" name="editForm">
-          <h2 class="new-item__title">Новое место</h2>
-          <input class="new-item__input new-item__input_edit_title" name="name" type="text" value="sfsdf" />
-          <input class="new-item__input new-item__input_edit_link" name="about-self" type="text" value="esfsadf" />
-          <button class="new-item__edit-button-save" type="submit">Создать</button>
-          <button class="new-item__edit-button-close" type="button"></button>
+
+
+    <div class="popup" id="popup-add-new-item">
+      <div class="popup__container" id="popup-container-add-new-item">
+        <form class="popup__form" name="add-new-item-form">
+          <h2 class="popup__title">Новое место</h2>
+          <input class="popup__input" id="popup-input-value-item-title" name="item-title" type="text" value="" placeholder="Название"/>
+          <input class="popup__input" id="popup-input-value-item-link" name="item-link" type="text" value="" placeholder="Ссылка на картинку"/>
+          <button class="popup__button-save" id="popup-add-new-item-button-save" type="submit">Создать</button>
+          <button class="popup__button-close" id="popup-add-new-item-button-close" type="button"></button>
         </form>
       </div>
     </div>
@@ -49,36 +54,7 @@
       </section>
 
       <section class="elements">
-        <div class="element">
-          <img src="./images/karachaevsk.png" alt="Карачаевск" class="element__image" />
-          <h2 class="element__description">Карачаевск</h2>
-          <button class="element__like-button" type="button"></button>
-        </div>
-        <div class="element">
-          <img src="./images/elbrus.png" alt="Гора Эльбрус" class="element__image" />
-          <h2 class="element__description">Гора Эльбрус</h2>
-          <button class="element__like-button" type="button"></button>
-        </div>
-        <div class="element">
-          <img src="./images/dombai.png" alt="Домбай" class="element__image" />
-          <h2 class="element__description">Домбай</h2>
-          <button class="element__like-button" type="button"></button>
-        </div>
-        <div class="element">
-          <img src="./images/elbrus.png" alt="Гора Эльбрус" class="element__image" />
-          <h2 class="element__description">Гора Эльбрус</h2>
-          <button class="element__like-button" type="button"></button>
-        </div>
-        <div class="element">
-          <img src="./images/dombai.png" alt="Домбай" class="element__image" />
-          <h2 class="element__description">Домбай</h2>
-          <button class="element__like-button" type="button"></button>
-        </div>
-        <div class="element">
-          <img src="./images/karachaevsk.png" alt="Карачаево-Черкессия" class="element__image" />
-          <h2 class="element__description">Карачаево-Черкессия</h2>
-          <button class="element__like-button" type="button"></button>
-        </div>
+
       </section>
     </main>
 
@@ -86,6 +62,15 @@
       <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
     </footer>
 
+    <template id="element-template">
+      <div class="element">
+        <img src="" alt="" class="element__image" />
+        <h2 class="element__title"></h2>
+        <button class="element__like-button" type="button"></button>
+        <button class="element__delete-button" type="button"></button>
+      </div>
+    </template>
+    
     <script src="scripts/index.js"></script>
   </body>
 </html>

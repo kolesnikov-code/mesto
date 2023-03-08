@@ -7,16 +7,11 @@
   height: 19px;
   background-image: url(../../../images/icons/like-icon.svg);
   background-repeat: no-repeat;
-  background-color: #ffffff;
+  background-color: transparent;
   border-style: none;
   cursor: pointer;
 }
 
 .element__like-button:hover {
   opacity: 0.5;
-}
-
-.element__like-button:active {
-  opacity: 1;
-  background-image: url(../../../images/icons/like-icon_active.svg);
 }

@@ -1,4 +1,4 @@
-.popup__edit-button-save {
+.popup__button-save {
   margin: 0 auto;
   padding: 0;
   margin-top: 48px;
@@ -14,13 +14,13 @@
   border-radius: 2px;
 }
 
-.popup__edit-button-save:hover {
+.popup__button-save:hover {
   opacity: 0.8;
   cursor: pointer;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
-  .popup__edit-button-save {
+  .popup__button-save {
     margin-top: 45px;
     margin-bottom: 25px;
     width: 238px;

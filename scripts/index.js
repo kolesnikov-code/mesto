@@ -1,46 +1,5 @@
-let popup = document.querySelector('.popup'); // получить доступ к блоку POPUP
-let formElement = document.querySelector('.popup__container'); // получить доступ к блоку POPUP
-
-let buttonEditOpen = document.querySelector('.profile__edit-button'); // получить доступ к кнопке ОТКРЫТЬ
-let buttonEditClose = document.querySelector('.popup__edit-button-close'); // получить доступ к кнопке ЗАКРЫТЬ
-
-let nameInput = document.querySelector('.popup__input_edit_name'); // получить доступ к полю ввода ИМЯ
-let jobInput = document.querySelector('.popup__input_edit_about-self'); // получить доступ к полю ввода ОБО МНЕ
-
-let userName = document.querySelector('.profile__name'); // получить доступ к элементу поля ИМЯ на странице 
-let userAboutSelf = document.querySelector('.profile__about-self'); // получить доступ к элементу поля ОБО МНЕ на странице 
-
-function editOpen() { // функция открывает форму
-  popup.classList.add('popup_opened'); // добавить класс видимости блоку с POPUP, открыть форму
-  nameInput.value = userName.textContent; // ввести в поле ввода ИМЯ данные со страницы из элемента ИМЯ
-  jobInput.value = userAboutSelf.textContent; // ввести в поле ввода ОБО МНЕ данные со страницы из элемента ОБО МНЕ
-}
-
-function editClose() { // функция закрывает форму
-  popup.classList.remove('popup_opened'); // удалить класс видимости, закрыть форму
-}
-
-function handleFormSubmit(evt) { // функция добавляет новые текстовые данные на страницу и закрывает форму
-  evt.preventDefault();
-  userName.textContent = nameInput.value; // добавляет новые текстовые данные из поля ввода ИМЯ в элемент ИМЯ на страницу
-  userAboutSelf.textContent = jobInput.value; // добавляет новые текстовые данные из поля ввода ОБО МНЕ в элемент ОБО МНЕ на страницу
-  editClose(); // вызывает функцию закрытия формы
-}
-
-buttonEditOpen.addEventListener('click', editOpen); // получить доступ к кнопке РЕДАКТИРОВАТЬ
-buttonEditClose.addEventListener('click', editClose); // получить доступ к кнопке ЗАКРЫТЬ
-
-formElement.addEventListener('submit', handleFormSubmit); // получить доступ к кнопке СОХРАНИТЬ
-
-
-
-
-
-
-
-
-
-
+// 1 БЛОК КОДА, ОТВЕЧАЕТ ЗА СОЗДАНИЕ HTML-ЭЛЕМЕНТОВ НА СТРАНИЦЕ
+// И ЗА ДОБАВЛЕНИЕ ДАННЫХ ИЗ МАССИВА В СОЗДАННЫЕ КАРТОЧКИ
 
 const initialCards = [
   {
@@ -70,3 +29,93 @@ const initialCards = [
 ];
 
 
+const elementsContainer = document.querySelector('.elements');
+
+function createNewElement() {
+  const elementTemplate = document.querySelector('#element-template').content;
+  const element = elementTemplate.querySelector('.element').cloneNode(true);
+
+  return element;
+};
+
+initialCards.forEach(function(item) {
+  const newElement = createNewElement();
+  const elementImage = newElement.querySelector('.element__image');
+  const elementTitle = newElement.querySelector('.element__title');
+  elementImage.src = item.link;
+  elementImage.alt = item.name;
+  elementTitle.textContent = item.name;
+  
+  elementsContainer.append(newElement);
+});
+
+
+
+
+
+
+
+
+// 2 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP ДЛЯ РЕДАКТИРОВАНИЯ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
+
+let popupEditUserInfo = document.querySelector('#popup-edit-user-info'); // получить доступ к блоку POPUP
+let formEditUserInfo = document.querySelector('#popup-container-edit-user-info'); // получить доступ к блоку POPUP
+let buttonEditUserInfoOpen = document.querySelector('.profile__edit-button'); // получить доступ к кнопке ОТКРЫТЬ
+let buttonEditUserInfoClose = document.querySelector('#popup-edit-user-info-button-close'); // получить доступ к кнопке ЗАКРЫТЬ
+let nameInput = document.querySelector('#popup-input-value-username'); // получить доступ к полю ввода ИМЯ
+let jobInput = document.querySelector('#popup-input-value-about-self'); // получить доступ к полю ввода ОБО МНЕ
+let userName = document.querySelector('.profile__name'); // получить доступ к элементу ИМЯ на странице 
+let userAboutSelf = document.querySelector('.profile__about-self'); // получить доступ к элементу ОБО МНЕ на странице 
+function editUserInfoFormOpen() { // функция открывает форму
+  popupEditUserInfo.classList.add('popup_opened'); // добавить класс видимости блоку с POPUP, открыть форму
+  nameInput.value = userName.textContent; // ввести в поле ввода ИМЯ данные со страницы из элемента ИМЯ
+  jobInput.value = userAboutSelf.textContent; // ввести в поле ввода ОБО МНЕ данные со страницы из элемента ОБО МНЕ
+};
+function editUserInfoFormClose() { // функция закрывает форму
+  popupEditUserInfo.classList.remove('popup_opened'); // удалить класс видимости, закрыть форму
+};
+function editUserInfoFormSubmit(evt) { // функция добавляет новые текстовые данные на страницу и закрывает форму
+  evt.preventDefault();
+  userName.textContent = nameInput.value; // добавляет новые текстовые данные из поля ввода ИМЯ в элемент ИМЯ на страницу
+  userAboutSelf.textContent = jobInput.value; // добавляет новые текстовые данные из поля ввода ОБО МНЕ в элемент ОБО МНЕ на страницу
+  editUserInfoFormClose(); // вызывает функцию закрытия формы
+};
+buttonEditUserInfoOpen.addEventListener('click', editUserInfoFormOpen); // получить доступ к кнопке РЕДАКТИРОВАТЬ
+buttonEditUserInfoClose.addEventListener('click', editUserInfoFormClose); // получить доступ к кнопке ЗАКРЫТЬ
+formEditUserInfo.addEventListener('submit', editUserInfoFormSubmit); // получить доступ к кнопке СОХРАНИТЬ
+
+
+
+
+
+
+// 3 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
+// ДЛЯ РЕДАКТИРОВАНИЯ УЖЕ ДОБАВЛЕННЫХ НА СТРАНИЦУ КАРТОЧЕК С ФОТОГРАФИЯМИ
+
+let popupAddNewItem = document.querySelector('#popup-add-new-item'); // получить доступ к блоку POPUP
+let formAddNewItem = document.querySelector('#popup-container-add-new-item'); // получить доступ к блоку POPUP
+let buttonAddNewItemOpen = document.querySelector('.profile__add-button'); // получить доступ к кнопке ОТКРЫТЬ
+let buttonAddNewItemClose = document.querySelector('#popup-add-new-item-button-close'); // получить доступ к кнопке ЗАКРЫТЬ
+let itemTitle = document.querySelector('#popup-input-value-item-title'); // получить доступ к полю ввода ИМЯ
+let itemImageLink = document.querySelector('#popup-input-value-item-link'); // получить доступ к полю ввода ОБО МНЕ
+let elementItem = document.querySelector('.element');
+let elementTitle = elementItem.querySelector('.element__title');
+let elementImage = elementItem.querySelector('.element__image');
+function addNewItemFormOpen() { // функция открывает форму
+  popupAddNewItem.classList.add('popup_opened'); // добавить класс видимости блоку с POPUP, открыть форму
+};
+function addNewItemFormClose() { // функция закрывает форму
+  popupAddNewItem.classList.remove('popup_opened'); // удалить класс видимости, закрыть форму
+};
+function addNewItemFormSubmit(evt) { // функция добавляет новые текстовые данные на страницу и закрывает форму
+  evt.preventDefault();
+  elementTitle.textContent = itemTitle.value; // добавляет новые текстовые данные из поля ввода 
+  elementImage.src = itemImageLink.value; // добавляет новые текстовые данные из поля ввода 
+  elementImage.alt = itemTitle.value; // добавляет новые текстовые данные в поле атрибут alt
+  itemTitle.value = '';
+  itemImageLink.value = '';
+  addNewItemFormClose(); // вызывает функцию закрытия формы
+};
+buttonAddNewItemOpen.addEventListener('click', addNewItemFormOpen); // добавить слушатель к кнопке РЕДАКТИРОВАТЬ
+buttonAddNewItemClose.addEventListener('click', addNewItemFormClose); // добавить слушатель к кнопке ЗАКРЫТЬ
+formAddNewItem.addEventListener('submit', addNewItemFormSubmit); // добавить слушатель к форме (на кнопку сохранить и ввод клавишей Enter)
