@@ -1,4 +1,4 @@
 .element__like-button_active {
-  opacity: 1;
-  background-image: url(../../../images/icons/like-icon.svg);
+  background-image: url(../../../../images/icons/like-icon_active.svg);
+  transition: background-image 0.1s linear;
 }

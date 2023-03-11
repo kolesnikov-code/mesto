@@ -1,0 +1,7 @@
+.full-image__container {
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    max-height: 75vh;
+    max-width: 75vw;
+}

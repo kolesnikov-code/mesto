@@ -1,5 +1,38 @@
-// 1 БЛОК КОДА, ОТВЕЧАЕТ ЗА СОЗДАНИЕ HTML-ЭЛЕМЕНТОВ НА СТРАНИЦЕ
-// И ЗА ДОБАВЛЕНИЕ ДАННЫХ ИЗ МАССИВА В СОЗДАННЫЕ КАРТОЧКИ
+// 1 БЛОК КОДА, ОТВЕЧАЕТ ЗА СОЗДАНИЕ HTML-ЭЛЕМЕНТА ИЗ DOM
+// И ЗА ДОБАВЛЕНИЕ СЛУШАТЕЛЯ СОБЫТИЙ ДЛЯ КНОПОК: ЛАЙК И УДАЛИТЬ КАРТОЧКУ
+
+
+function createNewElement() {
+  const elementTemplate = document.querySelector('#element-template').content;
+  const element = elementTemplate.querySelector('.element').cloneNode(true);
+  const buttonsDeleteElement = element.querySelectorAll('.element__delete-button');
+  buttonsDeleteElement.forEach((deleteButton) => {
+    deleteButton.addEventListener('click', function() {
+      console.log('delete');
+      const forDeleteElement = deleteButton.closest('.element');
+      forDeleteElement.remove();
+    });
+  });
+
+  const buttonsLikeElement = element.querySelectorAll('.element__like-button');
+  buttonsLikeElement.forEach((likeButton) => {
+    likeButton.addEventListener('click', function() {
+      likeButton.classList.toggle('element__like-button_active');
+    });
+  });
+
+  const buttonsOpenFullImage = element.querySelectorAll('.element__image');
+  buttonsOpenFullImage.forEach((openFullImageButton) => {
+    openFullImageButton.addEventListener('click', popupViewFullImageOpen);
+  });
+
+  return element;
+};
+
+
+
+// 2 БЛОК КОДА, ОТВЕЧАЕТ ЗА ДОБАВЛЕНИЕ ДАННЫХ ИЗ МАССИВА В КАРТОЧКУ 
+// И ДОБАВЛЕНИЕ ЗАПОЛНЕННОЙ КАРТОЧКИ В ВЁРСТКУ
 
 const initialCards = [
   {
@@ -29,33 +62,6 @@ const initialCards = [
 ];
 
 const elementsContainer = document.querySelector('.elements');
-function createNewElement() {
-  const elementTemplate = document.querySelector('#element-template').content;
-  const element = elementTemplate.querySelector('.element').cloneNode(true);
-
-
-  const buttonsDeleteElement = element.querySelectorAll('.element__delete-button');
-  buttonsDeleteElement.forEach((deleteButton) => {
-    deleteButton.addEventListener('click', function() {
-      console.log('delete');
-      const forDeleteElement = deleteButton.closest('.element');
-      forDeleteElement.remove();
-    });
-  });
-
-
-  const buttonsLikeElement = element.querySelectorAll('.element__like-button');
-  buttonsLikeElement.forEach((likeButton) => {
-    likeButton.addEventListener('click', function() {
-      console.log('like');
-      element.classList.toggle('element__like-button_active');
-    });
-  });
-
-
-  return element;
-};
-
 initialCards.forEach(function(item) {
   const newElement = createNewElement();
   const elementImage = newElement.querySelector('.element__image');
@@ -68,7 +74,7 @@ initialCards.forEach(function(item) {
 
 
 
-// 4 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
+// 3 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
 // ДЛЯ РЕДАКТИРОВАНИЯ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
 
 let popupEditUserInfo = document.querySelector('#popup-edit-user-info'); // получить доступ к блоку POPUP
@@ -99,10 +105,7 @@ formEditUserInfo.addEventListener('submit', editUserInfoFormSubmit); // полу
 
 
 
-
-
-
-// 5 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
+// 4 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
 // ДЛЯ РЕДАКТИРОВАНИЯ УЖЕ ДОБАВЛЕННЫХ НА СТРАНИЦУ КАРТОЧЕК С ФОТОГРАФИЯМИ
 
 let popupAddNewItem = document.querySelector('#popup-add-new-item'); // получить доступ к блоку POPUP
@@ -116,13 +119,14 @@ let elementTitle = elementItem.querySelector('.element__title');
 let elementImage = elementItem.querySelector('.element__image');
 function addNewItemFormOpen() { // функция открывает форму
   popupAddNewItem.classList.add('popup_opened'); // добавить класс видимости блоку с POPUP, открыть форму
+  itemTitle.value = '';
+  itemImageLink.value = ''; 
 };
 function addNewItemFormClose() { // функция закрывает форму
   popupAddNewItem.classList.remove('popup_opened'); // удалить класс видимости, закрыть форму
 };
 function addNewItemFormSubmit(evt) { // функция добавляет новые текстовые данные на страницу и закрывает форму
   evt.preventDefault();
-
   const newElement = createNewElement();
   const elementImage = newElement.querySelector('.element__image');
   const elementTitle = newElement.querySelector('.element__title');
@@ -130,10 +134,6 @@ function addNewItemFormSubmit(evt) { // функция добавляет нов
   elementImage.alt = itemTitle.value;
   elementTitle.textContent = itemTitle.value;
   elementsContainer.prepend(newElement);
-
-  itemTitle.value = '';
-  itemImageLink.value = '';
-  
   addNewItemFormClose(); // вызывает функцию закрытия формы
 };
 
@@ -143,3 +143,27 @@ formAddNewItem.addEventListener('submit', addNewItemFormSubmit); // добави
 
 
 
+// 5 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
+// ДЛЯ ПРОСМОТРА КАРТИНКИ В ПОЛНОМ РАЗМЕРЕ
+
+let popupViewFullImage = document.querySelector('#popup-view-full-image'); // получить доступ к блоку POPUP
+let buttonPopupFullImageOpen = document.querySelector('.element__image'); // получить доступ к открытию картинки
+let buttonPopupFullImageClose = document.querySelector('#popup-view-full-image-button-close'); // получить доступ к кнопке ЗАКРЫТЬ
+let fullImage = document.querySelector('#popup-full-image');
+let fullImageCaption = document.querySelector('.full-image__caption')
+
+function popupViewFullImageOpen() { 
+  popupViewFullImage.classList.add('popup_opened'); // добавить класс видимости блоку с POPUP, открыть форму
+  fullImage.src = this.src;
+  fullImageCaption.textContent = this.alt;
+};
+
+function popupViewFullImageClose() { 
+  popupViewFullImage.classList.remove('popup_opened'); // добавить класс видимости блоку с POPUP, открыть форму
+  imageElement.src = '';
+  imageElement.alt = '';
+};
+
+
+buttonPopupFullImageOpen.addEventListener('click', popupViewFullImageOpen); // добавить слушатель к кнопке РЕДАКТИРОВАТЬ
+buttonPopupFullImageClose.addEventListener('click', popupViewFullImageClose); // добавить слушатель к кнопке ЗАКРЫТЬ
