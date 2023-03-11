@@ -150,7 +150,7 @@ let popupViewFullImage = document.querySelector('#popup-view-full-image'); // п
 let buttonPopupFullImageOpen = document.querySelector('.element__image'); // получить доступ к открытию картинки
 let buttonPopupFullImageClose = document.querySelector('#popup-view-full-image-button-close'); // получить доступ к кнопке ЗАКРЫТЬ
 let fullImage = document.querySelector('#popup-full-image');
-let fullImageCaption = document.querySelector('.full-image__caption')
+let fullImageCaption = document.querySelector('.popup__full-image-caption')
 
 function popupViewFullImageOpen() { 
   popupViewFullImage.classList.add('popup_opened'); // добавить класс видимости блоку с POPUP, открыть форму
