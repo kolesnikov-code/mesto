@@ -160,8 +160,8 @@ function popupViewFullImageOpen() {
 
 function popupViewFullImageClose() { 
   popupViewFullImage.classList.remove('popup_opened'); // добавить класс видимости блоку с POPUP, открыть форму
-  imageElement.src = '';
-  imageElement.alt = '';
+  fullImage.src = '';
+  fullImage.alt = '';
 };
 
 
