@@ -162,7 +162,7 @@ const buttonPopupFullImageClose = document.querySelector('#popup-view-full-image
 const fullImage = document.querySelector('#popup-full-image');
 const fullImageCaption = document.querySelector('.popup__full-image-caption')
 
-function openPopupViewFullImage() { 
+function openPopupViewFullImage(evt) { 
   openPopup(popupViewFullImage);
   fullImage.src = evt.target.src;
   fullImage.alt = evt.target.alt;
