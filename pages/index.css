@@ -15,7 +15,7 @@
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__title/form__title.css);
 @import url(../blocks/form/__input/form__input.css);
-@import url(../blocks/form/__input/_type/_error/form__input_type_error.css);
+@import url(../blocks/form/__error/form__error.css);
 @import url(../blocks/form/__button-close/form__button-close.css);
 @import url(../blocks/form/__button-save/form__button-save.css);
 @import url(../blocks/form/__button-save/_inactive/form__button-save_inactive.css);
