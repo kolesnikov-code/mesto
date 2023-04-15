@@ -1,0 +1,27 @@
+.form__input_type_error {
+    margin: 0;
+    padding: 0;
+    margin-left: 36px;
+    margin-top: 5px;
+    max-width: 358px;
+    height: 30px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FF0000;
+    display: block;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .form__input_type_error {
+        margin-left: 22px;
+        max-width: 320px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+    .form__input_type_error {
+        margin-left: 22px;
+        max-width: 210px;
+    }
+}

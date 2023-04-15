@@ -61,7 +61,7 @@ const initialCards = [
 ];
 
 const elementsContainer = document.querySelector('.elements');
-initialCards.forEach(function(item) {
+initialCards.forEach(function (item) {
   const newElement = createCard(item);
   elementsContainer.append(newElement);
 });
@@ -79,6 +79,23 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 };
 
+const allPopup = document.querySelectorAll('.popup');
+const openedPopup = document.querySelector('.popup__opened');
+
+allPopup.forEach(function (popup) {
+  popup.addEventListener('click', (evt) => {
+    if (evt.currentTarget === evt.target) {
+      closePopup(popup);
+    };
+  });
+  
+  window.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+    };
+  });
+});
+
 
 // 4 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
 // ДЛЯ РЕДАКТИРОВАНИЯ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
@@ -86,16 +103,16 @@ function closePopup(popup) {
 const popupEditUserInfo = document.querySelector('#popup-edit-user-info'); 
 const formEditUserInfo = document.querySelector('#popup-container-edit-user-info');
 const buttonEditUserInfoOpen = document.querySelector('.profile__edit-button'); 
-const buttonEditUserInfoClose = document.querySelector('#popup-edit-user-info-button-close');
-const nameInput = document.querySelector('#popup-input-value-username'); 
-const jobInput = document.querySelector('#popup-input-value-about-self'); 
+const buttonEditUserInfoClose = document.querySelector('#form-edit-user-info-button-close');
+const nameInput = document.querySelector('#form-input-value-username'); 
+const aboutSelfInput = document.querySelector('#form-input-value-about-self'); 
 const userName = document.querySelector('.profile__name'); 
 const userAboutSelf = document.querySelector('.profile__about-self'); 
 
 function openEditUserInfoForm() { 
   openPopup(popupEditUserInfo);
   nameInput.value = userName.textContent; 
-  jobInput.value = userAboutSelf.textContent; 
+  aboutSelfInput.value = userAboutSelf.textContent; 
 };
 
 function closeEditUserInfoForm() { 
@@ -105,7 +122,7 @@ function closeEditUserInfoForm() {
 function submitEditUserInfoForm(evt) { 
   evt.preventDefault();
   userName.textContent = nameInput.value; 
-  userAboutSelf.textContent = jobInput.value; 
+  userAboutSelf.textContent = aboutSelfInput.value; 
   closeEditUserInfoForm(); 
 };
 
@@ -115,17 +132,15 @@ formEditUserInfo.addEventListener('submit', submitEditUserInfoForm);
 
 
 
-
-
 // 5 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
 // ДЛЯ РЕДАКТИРОВАНИЯ УЖЕ ДОБАВЛЕННЫХ НА СТРАНИЦУ КАРТОЧЕК С ФОТОГРАФИЯМИ
 
 const popupAddNewItem = document.querySelector('#popup-add-new-item'); 
 const formAddNewItem = document.querySelector('#popup-container-add-new-item');
 const buttonAddNewItemOpen = document.querySelector('.profile__add-button'); 
-const buttonAddNewItemClose = document.querySelector('#popup-add-new-item-button-close'); 
-const itemTitle = document.querySelector('#popup-input-value-item-title'); 
-const itemImageLink = document.querySelector('#popup-input-value-item-link'); 
+const buttonAddNewItemClose = document.querySelector('#form-add-new-item-button-close'); 
+const itemTitle = document.querySelector('#form-input-value-item-title'); 
+const itemImageLink = document.querySelector('#form-input-value-item-link'); 
 
 function openAddNewItemForm() { 
   openPopup(popupAddNewItem);
@@ -173,6 +188,6 @@ function closePopupViewFullImage() {
   closePopup(popupViewFullImage);
 };
 
-
 buttonPopupFullImageOpen.addEventListener('click', openPopupViewFullImage); 
 buttonPopupFullImageClose.addEventListener('click', closePopupViewFullImage); 
+
