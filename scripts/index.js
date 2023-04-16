@@ -71,26 +71,31 @@ initialCards.forEach(function (item) {
 // 3 БЛОК КОДА, ОТВЕЧАЕТ ЗА СОЗДАНИЕ 
 // ФУНКЦИЙ ОТКРЫТИЯ И ЗАКРЫТИЯ POPUP 
 
+// ОТКРЫВАЕТ POPUP
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupWithEscape);
 };
 
+// ЗАКРЫВАЕТ POPUP 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupWithEscape);
 };
 
-const allPopup = document.querySelectorAll('.popup');
-const openedPopup = document.querySelector('.popup__opened');
+// ЗАКРЫВАЕТ POPUP НАЖАТИЕМ КЛАВИШИ ESCAPE
+function closePopupWithEscape(evt) {
+  if(evt.key === 'Escape') { 
+    const popup = document.querySelector('.popup_opened')
+    closePopup(popup) 
+  };
+}; 
 
+// ЗАКРЫВАЕТ POPUP КЛИКОМ НА OVERLAY
+const allPopup = document.querySelectorAll('.popup');
 allPopup.forEach(function (popup) {
   popup.addEventListener('click', (evt) => {
     if (evt.currentTarget === evt.target) {
-      closePopup(popup);
-    };
-  });
-  
-  window.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
       closePopup(popup);
     };
   });
@@ -104,15 +109,15 @@ const popupEditUserInfo = document.querySelector('#popup-edit-user-info');
 const formEditUserInfo = document.querySelector('#popup-container-edit-user-info');
 const buttonEditUserInfoOpen = document.querySelector('.profile__edit-button'); 
 const buttonEditUserInfoClose = document.querySelector('#form-edit-user-info-button-close');
-const nameInput = document.querySelector('#form-input-value-username'); 
-const aboutSelfInput = document.querySelector('#form-input-value-about-self'); 
-const userName = document.querySelector('.profile__name'); 
-const userAboutSelf = document.querySelector('.profile__about-self'); 
+const inputNameInEditForm = document.querySelector('#form-input-value-username'); 
+const inputAboutSelfInEditForm = document.querySelector('#form-input-value-about-self'); 
+const userNameFromPage = document.querySelector('.profile__name'); 
+const userAboutSelfFromPage = document.querySelector('.profile__about-self'); 
 
 function openEditUserInfoForm() { 
   openPopup(popupEditUserInfo);
-  nameInput.value = userName.textContent; 
-  aboutSelfInput.value = userAboutSelf.textContent; 
+  inputNameInEditForm.value = userNameFromPage.textContent; 
+  inputAboutSelfInEditForm.value = userAboutSelfFromPage.textContent; 
 };
 
 function closeEditUserInfoForm() { 
@@ -121,8 +126,8 @@ function closeEditUserInfoForm() {
 
 function submitEditUserInfoForm(evt) { 
   evt.preventDefault();
-  userName.textContent = nameInput.value; 
-  userAboutSelf.textContent = aboutSelfInput.value; 
+  userNameFromPage.textContent = inputNameInEditForm.value; 
+  userAboutSelfFromPage.textContent = inputAboutSelfInEditForm.value; 
   closeEditUserInfoForm(); 
 };
 
@@ -133,28 +138,34 @@ formEditUserInfo.addEventListener('submit', submitEditUserInfoForm);
 
 
 // 5 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
-// ДЛЯ РЕДАКТИРОВАНИЯ УЖЕ ДОБАВЛЕННЫХ НА СТРАНИЦУ КАРТОЧЕК С ФОТОГРАФИЯМИ
+// ДЛЯ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК НА СТРАНИЦУ
 
 const popupAddNewItem = document.querySelector('#popup-add-new-item'); 
+const buttonElement = popupAddNewItem.querySelector('.form__button-save');
 const formAddNewItem = document.querySelector('#popup-container-add-new-item');
 const buttonAddNewItemOpen = document.querySelector('.profile__add-button'); 
 const buttonAddNewItemClose = document.querySelector('#form-add-new-item-button-close'); 
-const itemTitle = document.querySelector('#form-input-value-item-title'); 
-const itemImageLink = document.querySelector('#form-input-value-item-link'); 
+const inputTitleInNewItemForm = document.querySelector('#form-input-value-item-title'); 
+const inputLinkInNewItemForm = document.querySelector('#form-input-value-item-link'); 
 
 function openAddNewItemForm() { 
   openPopup(popupAddNewItem);
+  inputTitleInNewItemForm.value = '';
+  inputLinkInNewItemForm.value = '';
+  buttonElement.setAttribute('disabled', true);
+  buttonElement.classList.add('form__button-save_inactive');
 };
 
 function closeAddNewItemForm() { 
   closePopup(popupAddNewItem);
+  
 };
 
 function submitAddNewItemForm(evt) { 
   evt.preventDefault();
   const item = {
-    name: itemTitle.value,
-    link: itemImageLink.value
+    name: inputTitleInNewItemForm.value,
+    link: inputLinkInNewItemForm.value
   };
   const newElement = createCard(item);
   elementsContainer.prepend(newElement);
