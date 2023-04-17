@@ -141,7 +141,7 @@ formEditUserInfo.addEventListener('submit', submitEditUserInfoForm);
 // ДЛЯ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК НА СТРАНИЦУ
 
 const popupAddNewItem = document.querySelector('#popup-add-new-item'); 
-const buttonElement = popupAddNewItem.querySelector('.form__button-save');
+const buttonSaveNewElement = popupAddNewItem.querySelector('.form__button-save');
 const formAddNewItem = document.querySelector('#popup-container-add-new-item');
 const buttonAddNewItemOpen = document.querySelector('.profile__add-button'); 
 const buttonAddNewItemClose = document.querySelector('#form-add-new-item-button-close'); 
@@ -152,13 +152,11 @@ function openAddNewItemForm() {
   openPopup(popupAddNewItem);
   inputTitleInNewItemForm.value = '';
   inputLinkInNewItemForm.value = '';
-  buttonElement.setAttribute('disabled', true);
-  buttonElement.classList.add('form__button-save_inactive');
+  resetButton(buttonSaveNewElement, objectForm);
 };
 
 function closeAddNewItemForm() { 
   closePopup(popupAddNewItem);
-  
 };
 
 function submitAddNewItemForm(evt) { 

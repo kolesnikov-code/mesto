@@ -5,6 +5,11 @@ const objectForm = {
     inactiveSubmitButtonClass: 'form__button-save_inactive',
 };
 
+function resetButton(button, {inactiveSubmitButtonClass, ...rest}) {
+    button.setAttribute('disabled', true);
+    button.classList.add(inactiveSubmitButtonClass);
+};
+
 function showInputError(formElement, inputElement, errorMessage) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     errorElement.textContent = errorMessage;
@@ -31,8 +36,7 @@ function hasInvalidInput(inputList) {
 
 function toggleButtonState(inputList, buttonElement, obj) {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add(obj.inactiveSubmitButtonClass);
-        buttonElement.setAttribute('disabled', true);
+        resetButton(buttonElement, obj);
     } else {
         buttonElement.classList.remove(obj.inactiveSubmitButtonClass);
         buttonElement.removeAttribute('disabled', true);
@@ -42,11 +46,11 @@ function toggleButtonState(inputList, buttonElement, obj) {
 function setEventListeners(formElement, obj) {
     const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
     const buttonElement = formElement.querySelector(obj.submitButtonSelector);
-    toggleButtonState(inputList, buttonElement, objectForm);
+    toggleButtonState(inputList, buttonElement, obj);
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', function () {
             checkInputValidity(formElement, inputElement);
-            toggleButtonState(inputList, buttonElement, objectForm);
+            toggleButtonState(inputList, buttonElement, obj);
         });
     });
 };
@@ -54,7 +58,7 @@ function setEventListeners(formElement, obj) {
 function enableValidation(obj) {
     const formList = Array.from(document.querySelectorAll(obj.formSelector));
     formList.forEach((formElement) => {
-        setEventListeners(formElement, objectForm);
+        setEventListeners(formElement, obj);
         formElement.addEventListener('submit', function (evt) {
             evt.preventDefault();
         });
