@@ -1,37 +1,4 @@
-// 1 БЛОК КОДА, ОТВЕЧАЕТ ЗА СОЗДАНИЕ HTML-ЭЛЕМЕНТА ИЗ DOM
-// И ЗА ДОБАВЛЕНИЕ СЛУШАТЕЛЯ СОБЫТИЙ ДЛЯ КНОПОК: ЛАЙК И УДАЛИТЬ КАРТОЧКУ
-
-
-function createCard(card) {
-  const elementTemplate = document.querySelector('#element-template').content;
-  const element = elementTemplate.querySelector('.element').cloneNode(true);
-  const elementImage = element.querySelector('.element__image');
-  const elementTitle = element.querySelector('.element__title');
-  elementImage.src = card.link;
-  elementImage.alt = card.name;
-  elementTitle.textContent = card.name;
-
-  const deleteButton = element.querySelector('.element__delete-button');
-  deleteButton.addEventListener('click', function() {
-    const forDeleteElement = deleteButton.closest('.element');
-    forDeleteElement.remove();
-  });
-
-  const likeButton = element.querySelector('.element__like-button');
-  likeButton.addEventListener('click', function() {
-    likeButton.classList.toggle('element__like-button_active');
-  });
-
-  const openFullImageButton = elementImage;
-  openFullImageButton.addEventListener('click', openPopupViewFullImage);
-
-  return element;
-};
-
-
-
-// 2 БЛОК КОДА, ОТВЕЧАЕТ ЗА ДОБАВЛЕНИЕ ДАННЫХ ИЗ МАССИВА В КАРТОЧКУ 
-// И ДОБАВЛЕНИЕ ЗАПОЛНЕННОЙ КАРТОЧКИ В ВЁРСТКУ
+import Card from './Card.js';
 
 const initialCards = [
   {
@@ -61,10 +28,16 @@ const initialCards = [
 ];
 
 const elementsContainer = document.querySelector('.elements');
-initialCards.forEach(function (item) {
-  const newElement = createCard(item);
-  elementsContainer.append(newElement);
-});
+const renderElements = () => {
+  initialCards.forEach((item) => {
+    const cardItem = new Card(item, '#element-template');
+
+    const newElement = cardItem.generateCard();
+    elementsContainer.append(newElement);
+  });
+};
+
+renderElements();
 
 
 
@@ -100,6 +73,7 @@ allPopup.forEach(function (popup) {
     };
   });
 });
+
 
 
 // 4 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
@@ -165,9 +139,10 @@ function submitAddNewItemForm(evt) {
     name: inputTitleInNewItemForm.value,
     link: inputLinkInNewItemForm.value
   };
-  const newElement = createCard(item);
+
+  const cardItem = new Card(item, '#element-template');
+  const newElement = cardItem.generateCard();
   elementsContainer.prepend(newElement);
-  evt.target.reset()
   closeAddNewItemForm();
 };
 
@@ -197,6 +172,6 @@ function closePopupViewFullImage() {
   closePopup(popupViewFullImage);
 };
 
-buttonPopupFullImageOpen.addEventListener('click', openPopupViewFullImage); 
+
 buttonPopupFullImageClose.addEventListener('click', closePopupViewFullImage); 
 
