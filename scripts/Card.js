@@ -1,10 +1,23 @@
-export default class Card {
+import { openPopup } from './index.js';
+import { popupViewFullImage } from './index.js';
+
+export class Card {
     constructor(data, templateSelector) {
+        // Объявить селектор темплэйт-элемента для извлечения данных из него
         this._templateSelector = templateSelector;
-        this._image = data.link;
+        // Присвоить значения для ссылки и названия картинки
+        this._link = data.link;
         this._title = data.name;
+        // Объявить текущий элемент, с котороым происходит вся работа
+        this._element = this._getTemplate();
+        // Достать все кнопки и элементы для нажатия
+        this._likeButton = this._element.querySelector('.element__like-button');
+        this._deleteButton = this._element.querySelector('.element__delete-button');
+        this._openFullImageButton = this._element.querySelector('.element__image');
+        this._openFullImage = document.querySelector('#popup-full-image');
+        this._openFullTitle = document.querySelector('.popup__full-image-caption')
     };
-  
+
     _getTemplate() {
         const elementItem = document
         .querySelector(this._templateSelector)
@@ -18,31 +31,34 @@ export default class Card {
         this._element.remove();
     };
 
-    _handleLikeImage(likeButton) {
-        likeButton.classList.toggle('element__like-button_active');
+    _handleLikeImage() {
+        this._likeButton.classList.toggle('element__like-button_active');
     };
-  
-    _setEventListeners(element) {
-        this._likeButton = element.querySelector('.element__like-button');
+    
+    _openFullImagePopup() {
+        this._openFullImage.src = this._link;
+        this._openFullImage.alt = this._title;
+        this._openFullTitle.textContent = this._title;
+        openPopup(popupViewFullImage);
+    };
+
+    _setEventListeners() {
         this._likeButton.addEventListener('click', () => {
-            this._handleLikeImage(this._likeButton);
+            this._handleLikeImage();
         });
     
-        this._deleteButton = element.querySelector('.element__delete-button');
         this._deleteButton.addEventListener('click', () => {
             this._removeElement()
         });
     
-        this._openFullImageButton = element.querySelector('.element__image');
         this._openFullImageButton.addEventListener('click', () => {
-            openPopupViewFullImage();
+            this._openFullImagePopup()
         });
     };
   
     generateCard() {
-        this._element = this._getTemplate();
-        this._setEventListeners(this._element);
-        this._element.querySelector('.element__image').src = this._image;
+        this._setEventListeners();
+        this._element.querySelector('.element__image').src = this._link;
         this._element.querySelector('.element__image').alt = this._title;
         this._element.querySelector('.element__title').textContent = this._title;
     
