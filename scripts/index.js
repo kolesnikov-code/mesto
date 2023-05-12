@@ -1,12 +1,6 @@
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 
-const formConfig = {
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__button-save',
-  inactiveSubmitButtonClass: 'form__button-save_inactive'
-};
 
 // 1 БЛОК КОДА, ОТВЕЧАЕТ ЗА ХРАНЕНИЕ МАССИВА ДАННЫХ
 const initialCards = [
@@ -37,17 +31,46 @@ const initialCards = [
 ];
 
 
+// 2 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОБЪЯВЛЕНИЕ 
+// И ХРАНЕНИЕ ОБЪЕКТА "ФОРМА" С ЕЁ ЭЛЕМЕНТАМИ
+
+const formConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__button-save',
+  inactiveSubmitButtonClass: 'form__button-save_inactive'
+};
 
 
 
-// 2 БЛОК КОДА, ОТВЕЧАЕТ ЗА ДОБАВЛЕНИЕ КАРТОЧЕК 
+// "МОЖНО ЛУЧШЕ" ОБЯЗАТЕЛЬНО ПРОРАБОТАЮ В БЛИЖАЙШЕЕ ВРЕМЯ! 
+// ВСЕ РЕКОМЕНДАЦИИ ВИЖУ, ПОНЯЛ ИХ СМЫСЛ
+// ПРОСТО СЕЙЧАС ХОТЕЛОСЬ БЫ НАГНАТЬ 8ПР И НАЧАТЬ 9 СПРИНТ
+
+
+
+// 3 БЛОК КОДА, ОТВЕЧАЕТ ЗА СОЗДАНИЕ 
+// УНИВЕРСАЛЬНОЙ ФУНКЦИИ ДЛЯ СОЗДАНИЯ КАРТОЧКИ 
+// ИЗ КЛАССА И ЕЁ ВОЗВРАТА ДЛЯ ДАЛЬНЕЙШЕГО ДОБАВЛЕНИЕ 
+
+function createCard(item) {    
+  const cardItem = new Card(item, '#element-template');
+  const cardElement = cardItem.generateCard();
+  return cardElement;
+};
+
+
+
+
+
+// 4 БЛОК КОДА, ОТВЕЧАЕТ ЗА ДОБАВЛЕНИЕ КАРТОЧЕК 
 // НА ОСНОВЕ ДАННЫХ ИЗ МАССИВА ВЫШЕ
+
 const elementsContainer = document.querySelector('.elements');
+
 const renderElements = () => {
   initialCards.forEach((item) => {
-    const cardItem = new Card(item, '#element-template');
-
-    const newElement = cardItem.generateCard();
+    const newElement = createCard(item);
     elementsContainer.append(newElement);
   });
 };
@@ -57,7 +80,7 @@ renderElements();
 
 
 
-// 3 БЛОК КОДА, ОТВЕЧАЕТ ЗА СОЗДАНИЕ 
+// 5 БЛОК КОДА, ОТВЕЧАЕТ ЗА СОЗДАНИЕ 
 // ФУНКЦИЙ ОТКРЫТИЯ И ЗАКРЫТИЯ POPUP 
 
 // ОТКРЫВАЕТ POPUP
@@ -91,15 +114,7 @@ allPopup.forEach(function (popup) {
 
 
 
-// 4 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОБЪЯВЛЕНИЕ 
-// И ХРАНЕНИЕ ОБЪЕКТА "ФОРМА" С ЕЁ ЭЛЕМЕНТАМИ
-
-
-
-
-
-
-// 5 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
+// 6 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
 // ДЛЯ РЕДАКТИРОВАНИЯ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
 const popupEditUserInfo = document.querySelector('#popup-edit-user-info'); 
 const editUserInfoFormContainer = document.querySelector('#popup-container-edit-user-info'); // !!!!!!!!!!!!!!!!
@@ -123,7 +138,6 @@ function closeEditUserInfoForm() {
   closePopup(popupEditUserInfo);
 };
 
-
 function submitEditUserInfoForm(evt) { 
   evt.preventDefault();
   userNameFromPage.textContent = inputNameInEditForm.value; 
@@ -131,18 +145,13 @@ function submitEditUserInfoForm(evt) {
   closeEditUserInfoForm(); 
 };
 
-
-
 buttonEditUserInfoOpen.addEventListener('click', openEditUserInfoForm); 
 buttonEditUserInfoClose.addEventListener('click', closeEditUserInfoForm); 
 editUserInfoFormContainer.addEventListener('submit', submitEditUserInfoForm); 
 
 
 
-
-
-
-// 6 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
+// 7 БЛОК КОДА, ОТВЕЧАЕТ ЗА ОТКРЫТИЕ POPUP 
 // ДЛЯ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК НА СТРАНИЦУ
 
 const popupAddNewItem = document.querySelector('#popup-add-new-item'); 
@@ -173,17 +182,14 @@ function submitAddNewItemForm(evt) {
     link: inputLinkInNewItemForm.value
   };
 
-  const cardItem = new Card(item, '#element-template');
-  const newElement = cardItem.generateCard();
-  elementsContainer.prepend(newElement);
+  const newCreateElement = createCard(item);
+  elementsContainer.prepend(newCreateElement);
   closeAddNewItemForm();
 };
 
 buttonAddNewItemOpen.addEventListener('click', openAddNewItemForm);
 buttonAddNewItemClose.addEventListener('click', closeAddNewItemForm); 
 addNewItemFormContainer.addEventListener('submit', submitAddNewItemForm); 
-
-
 
 
 
