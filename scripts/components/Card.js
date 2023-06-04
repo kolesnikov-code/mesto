@@ -1,13 +1,11 @@
-import { openPopup } from './index.js';
-import { popupViewFullImage } from './index.js';
-
-export class Card {
-    constructor(data, templateSelector) {
+export default class Card {
+    constructor(data, templateSelector, handleCardClick) {
         // Объявить селектор темплэйт-элемента для извлечения данных из него
         this._templateSelector = templateSelector;
         // Присвоить значения для ссылки и названия картинки
-        this._link = data.link;
-        this._title = data.name;
+        this._data = data;
+        this._link = data.itemlink;
+        this._title = data.itemtitle;
         // Объявить текущий элемент, с котороым происходит вся работа
         this._element = this._getTemplate();
         // Достать все кнопки и элементы для нажатия
@@ -15,7 +13,8 @@ export class Card {
         this._deleteButton = this._element.querySelector('.element__delete-button');
         this._openFullImageButton = this._element.querySelector('.element__image');
         this._openFullImage = document.querySelector('#popup-full-image');
-        this._openFullTitle = document.querySelector('.popup__full-image-caption')
+        this._openFullTitle = document.querySelector('.popup__full-image-caption');
+        this._handleCardClick = handleCardClick;
     };
 
     _getTemplate() {
@@ -36,10 +35,7 @@ export class Card {
     };
     
     _openFullImagePopup() {
-        this._openFullImage.src = this._link;
-        this._openFullImage.alt = this._title;
-        this._openFullTitle.textContent = this._title;
-        openPopup(popupViewFullImage);
+        this._handleCardClick(this._data);
     };
 
     _setEventListeners() {
