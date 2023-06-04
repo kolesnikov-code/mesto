@@ -1,18 +1,18 @@
-import Card from './scripts/components/Card.js';
-import UserInfo from './scripts/components/UserInfo.js';
-import FormValidator from './scripts/components/FormValidator.js';
-import PopupWithImage from './scripts/components/PopupWithImage.js';
-import PopupWithForm from './scripts/components/PopupWithForm.js';
-import Section from './scripts/components/Section.js';
+import Card from '../scripts/components/Card.js';
+import UserInfo from '../scripts/components/UserInfo.js';
+import FormValidator from '../scripts/components/FormValidator.js';
+import PopupWithImage from '../scripts/components/PopupWithImage.js';
+import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import Section from '../scripts/components/Section.js';
 
-import { initialCards } from './scripts/utils/constants.js';
-import { userSelectorsConfig } from './scripts/utils/constants.js';
-import { formConfig } from './scripts/utils/constants.js';
-import { containerSelector } from './scripts/utils/constants.js'; 
-import { buttonEditUserInfoOpen } from './scripts/utils/constants.js';
-import { editUserInfoForm } from './scripts/utils/constants.js';
-import { buttonAddNewItemOpen } from './scripts/utils/constants.js';
-import { addNewItemForm } from './scripts/utils/constants.js';
+import { initialCards } from '../scripts/utils/constants.js';
+import { userSelectorsConfig } from '../scripts/utils/constants.js';
+import { formConfig } from '../scripts/utils/constants.js';
+import { containerSelector } from '../scripts/utils/constants.js'; 
+import { buttonEditUserInfoOpen } from '../scripts/utils/constants.js';
+import { editUserInfoForm } from '../scripts/utils/constants.js';
+import { buttonAddNewItemOpen } from '../scripts/utils/constants.js';
+import { addNewItemForm } from '../scripts/utils/constants.js';
 
 ///////////////////////////////////////////////////////////////////////////////
 
