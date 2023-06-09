@@ -7,14 +7,16 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import Section from '../scripts/components/Section.js';
 
-import { initialCards } from '../scripts/utils/constants.js';
-import { userSelectorsConfig } from '../scripts/utils/constants.js';
-import { formConfig } from '../scripts/utils/constants.js';
-import { containerSelector } from '../scripts/utils/constants.js'; 
-import { buttonEditUserInfoOpen } from '../scripts/utils/constants.js';
-import { editUserInfoForm } from '../scripts/utils/constants.js';
-import { buttonAddNewItemOpen } from '../scripts/utils/constants.js';
-import { addNewItemForm } from '../scripts/utils/constants.js';
+import { 
+  initialCards,
+  userSelectorsConfig,
+  formConfig,
+  containerSelector,
+  buttonEditUserInfoOpen,
+  editUserInfoForm,
+  buttonAddNewItemOpen,
+  addNewItemForm
+} from '../scripts/utils/constants.js';
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,28 +29,27 @@ popupViewFullImage.setEventListeners();
 
 ///////////////////////////////////////////////////////////////////////////////
 
-function rendererFunction(item) {
+function createCard(item) {
   const cardItem = new Card(item, '#element-template', popupViewFullImage.open);
-  const cardElement = cardItem.generateCard();
-  return cardElement;
+  return cardItem.generateCard();
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 
 const content = new Section({
   items: initialCards,
-  renderer: rendererFunction
+  renderer: createCard
 }, containerSelector);
 content.addItemsFromArray();
 
 ///////////////////////////////////////////////////////////////////////////////
 
 const validatorEditUserInfo = new FormValidator(formConfig, editUserInfoForm);
+validatorEditUserInfo.enableValidation();
 
-const popupEditUserInfo = new PopupWithForm('#popup-edit-user-info', (evt) => {
-  evt.preventDefault();
-  userInfo.setUserInfo(popupEditUserInfo.getInputValues());
-  popupEditUserInfo.close();
+const popupEditUserInfo = new PopupWithForm('#popup-edit-user-info', inputValues => {
+  userInfo.setUserInfo(inputValues); 
+  console.log(inputValues);
 });
 
 buttonEditUserInfoOpen.addEventListener('click', () => {
@@ -56,22 +57,19 @@ buttonEditUserInfoOpen.addEventListener('click', () => {
   popupEditUserInfo.setEventListeners();
   popupEditUserInfo.setInputValues(userInfo.getUserInfo());
   validatorEditUserInfo.resetSubmitButton();
-  validatorEditUserInfo.enableValidation();
 }); 
 
 ///////////////////////////////////////////////////////////////////////////////
 
 const validatorAddNewItem = new FormValidator(formConfig, addNewItemForm);
+validatorAddNewItem.enableValidation();
 
-const popupAddNewItem = new PopupWithForm('#popup-add-new-item', (evt) => {
-  evt.preventDefault();
-  content.addItem(rendererFunction(popupAddNewItem.getInputValues()))
-  popupAddNewItem.close();
+const popupAddNewItem = new PopupWithForm('#popup-add-new-item', inputValues => {
+  content.addItem(createCard(inputValues))
 }); 
 
 buttonAddNewItemOpen.addEventListener('click', () => {
   popupAddNewItem.open();
   popupAddNewItem.setEventListeners();
   validatorAddNewItem.resetSubmitButton();
-  validatorAddNewItem.enableValidation();
 });

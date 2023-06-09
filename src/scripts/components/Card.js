@@ -4,8 +4,6 @@ export default class Card {
         this._templateSelector = templateSelector;
         // Присвоить значения для ссылки и названия картинки
         this._data = data;
-        this._link = data.itemlink;
-        this._title = data.itemtitle;
         // Объявить текущий элемент, с котороым происходит вся работа
         this._element = this._getTemplate();
         // Достать все кнопки и элементы для нажатия
@@ -54,9 +52,9 @@ export default class Card {
   
     generateCard() {
         this._setEventListeners();
-        this._element.querySelector('.element__image').src = this._link;
-        this._element.querySelector('.element__image').alt = this._title;
-        this._element.querySelector('.element__title').textContent = this._title;
+        this._element.querySelector('.element__image').src = this._data.itemlink;
+        this._element.querySelector('.element__image').alt = this._data.itemtitle;
+        this._element.querySelector('.element__title').textContent = this._data.itemtitle;
     
         return this._element;
     };

@@ -38,10 +38,20 @@ export const formConfig = {
     inactiveSubmitButtonClass: 'form__button-save_inactive'
 };
 
-export const containerSelector = '.elements';
-export const editUserInfoFormContainer = document.querySelector('#popup-container-edit-user-info');
-export const buttonEditUserInfoOpen = document.querySelector('.profile__edit-button'); 
-export const editUserInfoForm = editUserInfoFormContainer.querySelector('.form');
-export const addNewItemFormContainer = document.querySelector('#popup-container-add-new-item');
-export const buttonAddNewItemOpen = document.querySelector('.profile__add-button'); 
-export const addNewItemForm = addNewItemFormContainer.querySelector('.form');
+const containerSelector = '.elements';
+const editUserInfoFormContainer = document.querySelector('#popup-container-edit-user-info');
+const buttonEditUserInfoOpen = document.querySelector('.profile__edit-button'); 
+const editUserInfoForm = editUserInfoFormContainer.querySelector('.form');
+const addNewItemFormContainer = document.querySelector('#popup-container-add-new-item');
+const buttonAddNewItemOpen = document.querySelector('.profile__add-button'); 
+const addNewItemForm = addNewItemFormContainer.querySelector('.form');
+
+export {
+  containerSelector,
+  editUserInfoFormContainer,
+  buttonEditUserInfoOpen,
+  editUserInfoForm,
+  addNewItemFormContainer,
+  buttonAddNewItemOpen,
+  addNewItemForm,
+};

@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body class="page">
 
@@ -14,10 +13,10 @@
         <form class="form" id="edit-user-info-form" name="edit-user-info-form" novalidate>
           <h2 class="form__title">Редактировать профиль</h2>
 
-          <input class="form__input" id="form-input-value-username" name="username" type="text" minlength="2" maxlength="40" value="" placeholder="Ваше имя" required>
+          <input class="form__input" id="form-input-value-username" name="username" type="text" minlength="2" maxlength="40" placeholder="Ваше имя" required>
           <span class="form-input-value-username-error form__error"></span>
 
-          <input class="form__input" id="form-input-value-about-self" name="aboutself" type="text" minlength="2" maxlength="200" value="" placeholder="Напишите о себе" required>
+          <input class="form__input" id="form-input-value-about-self" name="aboutself" type="text" minlength="2" maxlength="200" placeholder="Напишите о себе" required>
           <span class="form-input-value-about-self-error form__error"></span>
           
           <button class="form__button-save" id="form-edit-user-info-button-save" type="submit">Сохранить</button>
@@ -31,10 +30,10 @@
         <form class="form" name="add-new-item-form" novalidate>
           <h2 class="form__title">Новое место</h2>
 
-          <input class="form__input" id="form-input-value-item-title" name="itemtitle" type="text" minlength="2" maxlength="30" value="" placeholder="Название" required>
+          <input class="form__input" id="form-input-value-item-title" name="itemtitle" type="text" minlength="2" maxlength="30" placeholder="Название" required>
           <span class="form-input-value-item-title-error form__error"></span>
 
-          <input class="form__input" id="form-input-value-item-link" name="itemlink" type="url" value="" placeholder="Ссылка на картинку" required>
+          <input class="form__input" id="form-input-value-item-link" name="itemlink" type="url" placeholder="Ссылка на картинку" required>
           <span class="form-input-value-item-link-error form__error"></span>
 
           <button class="form__button-save" id="form-add-new-item-button-save" type="submit">Создать</button>
@@ -43,7 +42,7 @@
       </div>
     </div>
 
-    <div class="popup" id="popup-view-full-image">
+    <div class="popup popup_opacity-09" id="popup-view-full-image">
       <div class="popup__full-image-container">
         <img class="popup__full-image" id="popup-full-image">
         <p class="popup__full-image-caption"></p>
@@ -52,12 +51,12 @@
     </div>
 
     <header class="header">
-      <img class="header__logo" src="./images/logo/logo.svg" alt="Логотип сайта Место" />
+      <img class="header__logo" src="<%=require('./images/logo/logo.svg')%>" alt="Логотип сайта Место" />
     </header>
 
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="./images/profile-avatar-2.jpg" alt="Аватар профиля" />
+        <img class="profile__avatar" src="<%=require('./images/profile-avatar-2.jpg')%>" alt="Аватар профиля" />
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__edit-button" type="button"></button>

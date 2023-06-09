@@ -13,12 +13,12 @@ export default class PopupWithForm extends Popup {
         this._formElement.reset();
     };
 
-    getInputValues() {
-        this._inputValues = {};
+    _getInputValues() {
+        const inputValues = {};
         this._formInputList.forEach(input => {
-            this._inputValues[input.name] = input.value;
+            inputValues[input.name] = input.value;
         });
-        return this._inputValues;
+        return inputValues;
     };
 
     setInputValues(userInfoFromPage) {
@@ -29,6 +29,10 @@ export default class PopupWithForm extends Popup {
     
     setEventListeners() {
         super.setEventListeners();
-        this._formElement.addEventListener('submit', this._formSubmit);
+        this._formElement.addEventListener('submit', evt => {
+            evt.preventDefault();
+            this._formSubmit(this._getInputValues());
+            this.close();
+        });
     };
 }

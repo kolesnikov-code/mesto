@@ -7,6 +7,7 @@
 /*Общие файлы стилей для POPUP и его полей ввода, заголовка 
 кнопок закрытия, сохранения и свойство включения-выключения видимости*/
 @import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opacity-09/popup_opacity-09.css);
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/form/__button-save/form__button-save.css);

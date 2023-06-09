@@ -11,20 +11,21 @@ export default class FormValidator {
         this._buttonElement.classList.add(this._inactiveButtonClass);
     };
 
-    _showInputError(errorMessage) {
-        this._errorElement.textContent = errorMessage;
+    _showInputError(inputElement) {
+        this._errorElement = this._form.querySelector(`.${inputElement.id}-error`);
+        this._errorElement.textContent = inputElement.validationMessage;
     };
     
-    _hideInputError() {
+    _hideInputError(inputElement) {
+        this._errorElement = this._form.querySelector(`.${inputElement.id}-error`);
         this._errorElement.textContent = '';
     };
 
     _checkInputValidity(inputElement) {
-        this._errorElement = this._form.querySelector(`.${inputElement.id}-error`);
         if (!inputElement.validity.valid) {
-            this._showInputError(inputElement.validationMessage);
+            this._showInputError(inputElement);
         } else {
-            this._hideInputError();
+            this._hideInputError(inputElement);
         };
     };
 
