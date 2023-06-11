@@ -49,12 +49,12 @@ validatorEditUserInfo.enableValidation();
 
 const popupEditUserInfo = new PopupWithForm('#popup-edit-user-info', inputValues => {
   userInfo.setUserInfo(inputValues); 
-  console.log(inputValues);
 });
+
+popupEditUserInfo.setEventListeners();
 
 buttonEditUserInfoOpen.addEventListener('click', () => {
   popupEditUserInfo.open();
-  popupEditUserInfo.setEventListeners();
   popupEditUserInfo.setInputValues(userInfo.getUserInfo());
   validatorEditUserInfo.resetSubmitButton();
 }); 
@@ -65,11 +65,14 @@ const validatorAddNewItem = new FormValidator(formConfig, addNewItemForm);
 validatorAddNewItem.enableValidation();
 
 const popupAddNewItem = new PopupWithForm('#popup-add-new-item', inputValues => {
-  content.addItem(createCard(inputValues))
+  content.addItem(createCard(inputValues));
+  console.log(inputValues);
+
 }); 
+
+popupAddNewItem.setEventListeners();
 
 buttonAddNewItemOpen.addEventListener('click', () => {
   popupAddNewItem.open();
-  popupAddNewItem.setEventListeners();
   validatorAddNewItem.resetSubmitButton();
 });
