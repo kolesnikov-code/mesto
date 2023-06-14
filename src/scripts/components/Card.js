@@ -52,9 +52,9 @@ export default class Card {
   
     generateCard() {
         this._setEventListeners();
-        this._element.querySelector('.element__image').src = this._data.itemlink;
-        this._element.querySelector('.element__image').alt = this._data.itemtitle;
-        this._element.querySelector('.element__title').textContent = this._data.itemtitle;
+        this._element.querySelector('.element__image').src = this._data.link;
+        this._element.querySelector('.element__image').alt = this._data.name;
+        this._element.querySelector('.element__title').textContent = this._data.name;
     
         return this._element;
     };

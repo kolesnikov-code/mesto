@@ -28,7 +28,8 @@ export const initialCards = [
 
 export const userSelectorsConfig = {
   userNameSelector: '.profile__name',
-  userAboutSelfSelector: '.profile__about-self'
+  userAboutSelfSelector: '.profile__about-self',
+  userAvatarImageSelector: '.profile__avatar'
 };
 
 export const formConfig = {

@@ -6,6 +6,7 @@ import FormValidator from '../scripts/components/FormValidator.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import Section from '../scripts/components/Section.js';
+import Api from '../scripts/components/Api';
 
 import { 
   initialCards,
@@ -17,6 +18,16 @@ import {
   buttonAddNewItemOpen,
   addNewItemForm
 } from '../scripts/utils/constants.js';
+
+///////////////////////////////////////////////////////////////////////////////
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-68',
+  headers: {
+    authorization: '97ad322c-b015-452e-9cce-fedc441ba370',
+    'Content-Type': 'application/json'
+  }
+}); 
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -37,10 +48,8 @@ function createCard(item) {
 ///////////////////////////////////////////////////////////////////////////////
 
 const content = new Section({
-  items: initialCards,
   renderer: createCard
 }, containerSelector);
-content.addItemsFromArray();
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -76,3 +85,11 @@ buttonAddNewItemOpen.addEventListener('click', () => {
   popupAddNewItem.open();
   validatorAddNewItem.resetSubmitButton();
 });
+
+Promise.all([api.getUserInfo(), api.getCards()])
+  .then(([dataUserInfo, dataCards]) => {
+    console.log(dataUserInfo);
+    console.log(dataCards);
+    userInfo.setUserInfo({avatar: dataUserInfo.avatar, username: dataUserInfo.name, aboutself: dataUserInfo.about});
+    content.addItemsFromArray(dataCards);
+  })
