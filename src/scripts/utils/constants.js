@@ -1,31 +1,4 @@
 // 1 БЛОК КОДА, ОТВЕЧАЕТ ЗА ХРАНЕНИЕ МАССИВА ДАННЫХ
-export const initialCards = [
-    {
-      itemtitle: 'Архыз',
-      itemlink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      itemtitle: 'Челябинская область',
-      itemlink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      itemtitle: 'Иваново',
-      itemlink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      itemtitle: 'Камчатка',
-      itemlink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      itemtitle: 'Холмогорский район',
-      itemlink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      itemtitle: 'Байкал',
-      itemlink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
 export const userSelectorsConfig = {
   userNameSelector: '.profile__name',
   userAboutSelfSelector: '.profile__about-self',
@@ -40,15 +13,27 @@ export const formConfig = {
 };
 
 const containerSelector = '.elements';
+
+// Форма редактирования аватарки
+const editUserAvatarFormContainer = document.querySelector('#popup-container-edit-user-avatar');
+const buttonEditUserAvatarOpen = document.querySelector('.profile__avatar-edit-button'); 
+const editUserAvatarForm = editUserAvatarFormContainer.querySelector('.form');
+
+// Форма редактирования полей Имя , Обо мне
 const editUserInfoFormContainer = document.querySelector('#popup-container-edit-user-info');
 const buttonEditUserInfoOpen = document.querySelector('.profile__edit-button'); 
 const editUserInfoForm = editUserInfoFormContainer.querySelector('.form');
+
+// Форма добавления новой картинки
 const addNewItemFormContainer = document.querySelector('#popup-container-add-new-item');
 const buttonAddNewItemOpen = document.querySelector('.profile__add-button'); 
 const addNewItemForm = addNewItemFormContainer.querySelector('.form');
 
 export {
   containerSelector,
+  editUserAvatarFormContainer,
+  buttonEditUserAvatarOpen,
+  editUserAvatarForm,
   editUserInfoFormContainer,
   buttonEditUserInfoOpen,
   editUserInfoForm,

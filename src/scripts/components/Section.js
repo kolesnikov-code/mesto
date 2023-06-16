@@ -6,11 +6,15 @@ export default class Section {
 
     addItemsFromArray(itemsArray) {
         itemsArray.forEach(item => {
-            this.addItem(this._renderer(item));
+            this.addItemAppend(this._renderer(item));
         });
     };
 
-    addItem(domElement) {
+    addItemPrepend(domElement) {
         this._container.prepend(domElement);
+    };
+
+    addItemAppend(domElement) {
+        this._container.append(domElement);
     };
 }

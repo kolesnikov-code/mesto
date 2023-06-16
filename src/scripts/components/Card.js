@@ -1,13 +1,11 @@
 export default class Card {
     constructor(data, templateSelector, handleCardClick) {
-        // Объявить селектор темплэйт-элемента для извлечения данных из него
+        console.log(data)
         this._templateSelector = templateSelector;
-        // Присвоить значения для ссылки и названия картинки
         this._data = data;
-        // Объявить текущий элемент, с котороым происходит вся работа
         this._element = this._getTemplate();
-        // Достать все кнопки и элементы для нажатия
         this._likeButton = this._element.querySelector('.element__like-button');
+        this._likeCounter = this._element.querySelector('.element__like-counter');
         this._deleteButton = this._element.querySelector('.element__delete-button');
         this._openFullImageButton = this._element.querySelector('.element__image');
         this._openFullImage = document.querySelector('#popup-full-image');
@@ -29,6 +27,7 @@ export default class Card {
     };
 
     _handleLikeImage() {
+        this._changeLikeImage(this._data._id);
         this._likeButton.classList.toggle('element__like-button_active');
     };
     
@@ -50,12 +49,33 @@ export default class Card {
         });
     };
   
+    _changeVisibleRemoveElement() {
+        if (this._data.myId !== this._data.owner._id) {
+            this._deleteButton.style.display = 'none';
+        }
+    }
+
+    _changeLikeCounterElement() {
+
+    }
+
+    _checkLikeStatus() {
+        this._data.likes.forEach(like => {
+            if (like._id === this._data.myId) {
+                this._likeButton.classList.add('element__like-button_active');
+            }
+        });
+        this._likeCounter.textContent = this._data.likes.length;
+    };
+
     generateCard() {
         this._setEventListeners();
         this._element.querySelector('.element__image').src = this._data.link;
         this._element.querySelector('.element__image').alt = this._data.name;
         this._element.querySelector('.element__title').textContent = this._data.name;
-    
+        this._changeVisibleRemoveElement();
+        this._checkLikeStatus();
+
         return this._element;
     };
 };

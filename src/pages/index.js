@@ -9,10 +9,11 @@ import Section from '../scripts/components/Section.js';
 import Api from '../scripts/components/Api';
 
 import { 
-  initialCards,
   userSelectorsConfig,
   formConfig,
   containerSelector,
+  buttonEditUserAvatarOpen,
+  editUserAvatarForm,
   buttonEditUserInfoOpen,
   editUserInfoForm,
   buttonAddNewItemOpen,
@@ -56,8 +57,13 @@ const content = new Section({
 const validatorEditUserInfo = new FormValidator(formConfig, editUserInfoForm);
 validatorEditUserInfo.enableValidation();
 
-const popupEditUserInfo = new PopupWithForm('#popup-edit-user-info', inputValues => {
-  userInfo.setUserInfo(inputValues); 
+const popupEditUserInfo = new PopupWithForm('#popup-edit-user-info', data => {
+  api.editUserInfo(data)
+    .then(res => {
+      userInfo.setUserInfo({ username: res.name, aboutself: res.about });
+    })
+    .catch((error => console.error(`Произошла ошибка при редактировании профиля ${error}`)))
+    .finally()
 });
 
 popupEditUserInfo.setEventListeners();
@@ -70,13 +76,39 @@ buttonEditUserInfoOpen.addEventListener('click', () => {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+const validatorEditUserAvatar = new FormValidator(formConfig, editUserAvatarForm);
+validatorEditUserAvatar.enableValidation();
+
+const popupEditUserAvatar = new PopupWithForm('#popup-edit-user-avatar', data => {
+  api.editUserAvatar(data)
+    .then(res => {
+      userInfo.editUserAvatar({ avatarlink: res.avatar });
+    })
+    .catch((error => console.error(`Произошла ошибка при редактировании аватарки ${error}`)))
+    .finally()
+});
+
+popupEditUserAvatar.setEventListeners();
+
+buttonEditUserAvatarOpen.addEventListener('click', () => {
+  popupEditUserAvatar.open();
+  popupEditUserAvatar.setInputValues(userInfo.getUserInfo());
+  validatorEditUserAvatar.resetSubmitButton();
+}); 
+
+///////////////////////////////////////////////////////////////////////////////
+
 const validatorAddNewItem = new FormValidator(formConfig, addNewItemForm);
 validatorAddNewItem.enableValidation();
 
-const popupAddNewItem = new PopupWithForm('#popup-add-new-item', inputValues => {
-  content.addItem(createCard(inputValues));
-  console.log(inputValues);
-
+const popupAddNewItem = new PopupWithForm('#popup-add-new-item', data => {
+  api.addNewCard(data)
+    .then(res => {
+      content.addItemPrepend(createCard(res));
+    })
+    .catch((error => console.error(`Произошла ошибка при создании новой карточки ${error}`)))
+    .finally()
+  // 
 }); 
 
 popupAddNewItem.setEventListeners();
@@ -86,10 +118,12 @@ buttonAddNewItemOpen.addEventListener('click', () => {
   validatorAddNewItem.resetSubmitButton();
 });
 
+///////////////////////////////////////////////////////////////////////////////
+
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([dataUserInfo, dataCards]) => {
-    console.log(dataUserInfo);
-    console.log(dataCards);
+    dataCards.forEach(element => element.myId = dataUserInfo._id)
     userInfo.setUserInfo({avatar: dataUserInfo.avatar, username: dataUserInfo.name, aboutself: dataUserInfo.about});
     content.addItemsFromArray(dataCards);
   })
+  .catch((error => console.error(`Произошла ошибка при загрузке данных ${error}`)))

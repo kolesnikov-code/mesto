@@ -8,6 +8,20 @@
   </head>
   <body class="page">
 
+    <div class="popup" id="popup-edit-user-avatar">
+      <div class="popup__container" id="popup-container-edit-user-avatar">
+        <form class="form" id="edit-user-avatar-form" name="edit-user-avatar-form" novalidate>
+          <h2 class="form__title">Обновить аватар</h2>
+
+          <input class="form__input" id="form-input-value-avatar-link" name="avatarlink" type="url" placeholder="Ваше имя" required>
+          <span class="form-input-value-avatar-link-error form__error"></span>
+
+          <button class="form__button-save" id="form-edit-user-avatar-button-save" type="submit">Сохранить</button>
+          <button class="popup__button-close" id="form-edit-user-avatar-button-close" type="button"></button>
+        </form>
+      </div>
+    </div>
+
     <div class="popup" id="popup-edit-user-info">
       <div class="popup__container" id="popup-container-edit-user-info">
         <form class="form" id="edit-user-info-form" name="edit-user-info-form" novalidate>
@@ -30,10 +44,10 @@
         <form class="form" name="add-new-item-form" novalidate>
           <h2 class="form__title">Новое место</h2>
 
-          <input class="form__input" id="form-input-value-item-title" name="itemtitle" type="text" minlength="2" maxlength="30" placeholder="Название" required>
+          <input class="form__input" id="form-input-value-item-title" name="title" type="text" minlength="2" maxlength="30" placeholder="Название" required>
           <span class="form-input-value-item-title-error form__error"></span>
 
-          <input class="form__input" id="form-input-value-item-link" name="itemlink" type="url" placeholder="Ссылка на картинку" required>
+          <input class="form__input" id="form-input-value-item-link" name="link" type="url" placeholder="Ссылка на картинку" required>
           <span class="form-input-value-item-link-error form__error"></span>
 
           <button class="form__button-save" id="form-add-new-item-button-save" type="submit">Создать</button>
@@ -56,7 +70,9 @@
 
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="#" alt="Аватар профиля" />
+        <button class="profile__avatar-edit-button">
+          <img class="profile__avatar" src="#" alt="Аватар профиля" />
+        </button>
         <div class="profile__info">
           <h1 class="profile__name"></h1>
           <button class="profile__edit-button" type="button"></button>
@@ -78,8 +94,11 @@
       <div class="element">
         <img class="element__image" />
         <h2 class="element__title"></h2>
-        <button class="element__like-button" type="button"></button>
         <button class="element__delete-button" type="button"></button>
+        <div class="element__like-container">
+          <button class="element__like-button" type="button"></button>
+          <p class="element__like-counter"></p>
+        </div>
       </div>
     </template>
     
