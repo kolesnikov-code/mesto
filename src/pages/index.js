@@ -90,9 +90,10 @@ const popupEditUserInfo = new PopupWithForm('#popup-edit-user-info', data => {
   api.editUserInfo(data)
     .then(res => {
       userInfo.setUserInfo({ avatarlink: res.avatar, username: res.name, aboutself: res.about });
+      popupEditUserInfo.close()
     })
     .catch((error => console.error(`Произошла ошибка при редактировании профиля ${error}`)))
-    .finally()
+    .finally(() => popupEditUserInfo.resetTextSubmitButton()) 
 });
 
 popupEditUserInfo.setEventListeners();
@@ -112,9 +113,10 @@ const popupEditUserAvatar = new PopupWithForm('#popup-edit-user-avatar', data =>
   api.editUserAvatar(data)
     .then(res => {
       userInfo.setUserInfo({ avatarlink: res.avatar, username: res.name, aboutself: res.about });
+      popupEditUserAvatar.close()
     })
     .catch((error => console.error(`Произошла ошибка при редактировании аватарки ${error}`)))
-    .finally()
+    .finally(() => popupEditUserAvatar.resetTextSubmitButton()) 
 });
 
 popupEditUserAvatar.setEventListeners();
@@ -134,9 +136,10 @@ const popupAddNewItem = new PopupWithForm('#popup-add-new-item', data => {
   api.addNewCard(data)
     .then(res => {
       content.addItemPrepend(createCard(res));
+      popupAddNewItem.close()
     })
     .catch((error => console.error(`Произошла ошибка при создании новой карточки ${error}`)))
-    .finally() 
+    .finally(() => popupAddNewItem.resetTextSubmitButton()) 
 }); 
 
 popupAddNewItem.setEventListeners();
