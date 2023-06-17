@@ -11,7 +11,7 @@ export default class Api {
                 authorization: this._authorization
             }
         })
-        .then(res => res.ok ? res.json() : Promise.reject)
+            .then(res => res.ok ? res.json() : Promise.reject)
     };
 
     getCards() {
@@ -20,7 +20,7 @@ export default class Api {
                 authorization: this._authorization
             }
         })
-        .then(res => res.ok ? res.json() : Promise.reject)
+            .then(res => res.ok ? res.json() : Promise.reject)
     };
 
     addNewCard(newCardData) {
@@ -35,38 +35,37 @@ export default class Api {
               link: newCardData.link,
             })
         })
-        .then(res => res.ok ? res.json() : Promise.reject)
+            .then(res => res.ok ? res.json() : Promise.reject)
     };
 
-    deleteCard() {
-        return fetch(`${this._url}/${cardId}`, {
+    deleteCard(cardId) {
+        return fetch(`${this._url}/cards/${cardId}`, {
             method: 'DELETE',
             headers: {
-              authorization: this._authorization,
-              'Content-Type': 'application/json'
+              authorization: this._authorization
             },
         })
-        .then(res => res.ok ? res.json() : Promise.reject)
+            .then(res => res.ok ? res.json() : Promise.reject)
     }
 
-    addLike() {
+    addLike(cardId) {
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: 'PUT',
             headers: {
                 authorization: this._authorization,
             },
         })
-        .then(res => res.ok ? res.json() : Promise.reject)
+            .then(res => res.ok ? res.json() : Promise.reject)
     }
 
-    deleteLike() {
+    deleteLike(cardId) {
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: 'DELETE',
             headers: {
                 authorization: this._authorization,
             },
         })
-        .then(res => res.ok ? res.json() : Promise.reject)
+            .then(res => res.ok ? res.json() : Promise.reject)
     }
 
     editUserInfo(newUserData) {
@@ -81,7 +80,7 @@ export default class Api {
               about: newUserData.aboutself,
             })
         })
-        .then(res => res.ok ? res.json() : Promise.reject)
+            .then(res => res.ok ? res.json() : Promise.reject)
     };
 
     editUserAvatar(newUserData) {
@@ -95,7 +94,7 @@ export default class Api {
               avatar: newUserData.avatarlink,
             })
         })
-        .then(res => res.ok ? res.json() : Promise.reject)
+            .then(res => res.ok ? res.json() : Promise.reject)
     };
 
 

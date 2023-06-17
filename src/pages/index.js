@@ -5,6 +5,7 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import PopupWithFormDelete from '../scripts/components/PopupWithFormDelete';
 import Section from '../scripts/components/Section.js';
 import Api from '../scripts/components/Api';
 
@@ -41,8 +42,36 @@ popupViewFullImage.setEventListeners();
 
 ///////////////////////////////////////////////////////////////////////////////
 
+const popupDeleteItem = new PopupWithFormDelete('#popup-delete-item', ({ card, cardId }) => {
+  api.deleteCard(cardId)
+    .then(() => {
+      card.deleteElement();
+      popupDeleteItem.close();
+    })
+    .catch((error => console.error(`Произошла ошибка при удалении карточки ${error}`)))
+    .finally() 
+}); 
+
+popupDeleteItem.setEventListeners();
+
+///////////////////////////////////////////////////////////////////////////////
+
 function createCard(item) {
-  const cardItem = new Card(item, '#element-template', popupViewFullImage.open);
+  const cardItem = new Card(item, '#element-template', popupViewFullImage.open, popupDeleteItem.open, (likeButtonElement, cardId) => {
+    if (likeButtonElement.classList.contains('element__like-button_active')) {
+      api.deleteLike(cardId)
+        .then(res => {
+          cardItem.toggleLikeButton(res.likes);
+        })
+        .catch((error => console.error(`Произошла ошибка при удалении лайка ${error}`)))
+    } else {
+      api.addLike(cardId)
+        .then(res => {
+          cardItem.toggleLikeButton(res.likes);
+        })
+        .catch((error => console.error(`Произошла ошибка при добавлении лайка ${error}`)))
+    }
+  });
   return cardItem.generateCard();
 };
 
@@ -60,7 +89,7 @@ validatorEditUserInfo.enableValidation();
 const popupEditUserInfo = new PopupWithForm('#popup-edit-user-info', data => {
   api.editUserInfo(data)
     .then(res => {
-      userInfo.setUserInfo({ username: res.name, aboutself: res.about });
+      userInfo.setUserInfo({ avatarlink: res.avatar, username: res.name, aboutself: res.about });
     })
     .catch((error => console.error(`Произошла ошибка при редактировании профиля ${error}`)))
     .finally()
@@ -82,7 +111,7 @@ validatorEditUserAvatar.enableValidation();
 const popupEditUserAvatar = new PopupWithForm('#popup-edit-user-avatar', data => {
   api.editUserAvatar(data)
     .then(res => {
-      userInfo.editUserAvatar({ avatarlink: res.avatar });
+      userInfo.setUserInfo({ avatarlink: res.avatar, username: res.name, aboutself: res.about });
     })
     .catch((error => console.error(`Произошла ошибка при редактировании аватарки ${error}`)))
     .finally()
@@ -107,8 +136,7 @@ const popupAddNewItem = new PopupWithForm('#popup-add-new-item', data => {
       content.addItemPrepend(createCard(res));
     })
     .catch((error => console.error(`Произошла ошибка при создании новой карточки ${error}`)))
-    .finally()
-  // 
+    .finally() 
 }); 
 
 popupAddNewItem.setEventListeners();
@@ -123,7 +151,7 @@ buttonAddNewItemOpen.addEventListener('click', () => {
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([dataUserInfo, dataCards]) => {
     dataCards.forEach(element => element.myId = dataUserInfo._id)
-    userInfo.setUserInfo({avatar: dataUserInfo.avatar, username: dataUserInfo.name, aboutself: dataUserInfo.about});
+    userInfo.setUserInfo({avatarlink: dataUserInfo.avatar, username: dataUserInfo.name, aboutself: dataUserInfo.about});
     content.addItemsFromArray(dataCards);
   })
   .catch((error => console.error(`Произошла ошибка при загрузке данных ${error}`)))

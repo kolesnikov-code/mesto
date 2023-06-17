@@ -1,12 +1,14 @@
 export default class Card {
-    constructor(data, templateSelector, handleCardClick) {
+    constructor(data, templateSelector, handleCardClick, openDeletePopup, changeLikeStatus) {
         console.log(data)
         this._templateSelector = templateSelector;
         this._data = data;
         this._element = this._getTemplate();
         this._likeButton = this._element.querySelector('.element__like-button');
         this._likeCounter = this._element.querySelector('.element__like-counter');
+        this._changeLikeStatus = changeLikeStatus;
         this._deleteButton = this._element.querySelector('.element__delete-button');
+        this._openDeletePopup = openDeletePopup;
         this._openFullImageButton = this._element.querySelector('.element__image');
         this._openFullImage = document.querySelector('#popup-full-image');
         this._openFullTitle = document.querySelector('.popup__full-image-caption');
@@ -23,12 +25,11 @@ export default class Card {
     };
     
     _removeElement() {
-        this._element.remove();
+        this._openDeletePopup({ card: this, cardId: this._data._id });
     };
 
     _handleLikeImage() {
-        this._changeLikeImage(this._data._id);
-        this._likeButton.classList.toggle('element__like-button_active');
+        this._changeLikeStatus(this._likeButton, this._data._id)
     };
     
     _openFullImagePopup() {
@@ -55,10 +56,6 @@ export default class Card {
         }
     }
 
-    _changeLikeCounterElement() {
-
-    }
-
     _checkLikeStatus() {
         this._data.likes.forEach(like => {
             if (like._id === this._data.myId) {
@@ -66,6 +63,16 @@ export default class Card {
             }
         });
         this._likeCounter.textContent = this._data.likes.length;
+    };
+
+    deleteElement() {
+        this._element.remove();
+        this._element = null;
+    }
+
+    toggleLikeButton(likes) {
+        this._likeButton.classList.toggle('element__like-button_active');
+        this._likeCounter.textContent = likes.length;
     };
 
     generateCard() {
