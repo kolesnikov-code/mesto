@@ -1,9 +1,9 @@
 export default class Card {
     constructor(data, templateSelector, handleCardClick, openDeletePopup, changeLikeStatus) {
-        console.log(data)
         this._templateSelector = templateSelector;
         this._data = data;
         this._element = this._getTemplate();
+        this._imageElement = this._element.querySelector('.element__image');
         this._likeButton = this._element.querySelector('.element__like-button');
         this._likeCounter = this._element.querySelector('.element__like-counter');
         this._changeLikeStatus = changeLikeStatus;
@@ -24,6 +24,12 @@ export default class Card {
         return elementItem;
     };
     
+    _changeVisibleRemoveElement() {
+        if (this._data.owner._id !== this._data.myId) {
+            this._deleteButton.remove();
+        }
+    }
+
     _removeElement() {
         this._openDeletePopup({ card: this, cardId: this._data._id });
     };
@@ -49,12 +55,6 @@ export default class Card {
             this._openFullImagePopup()
         });
     };
-  
-    _changeVisibleRemoveElement() {
-        if (this._data.myId !== this._data.owner._id) {
-            this._deleteButton.style.display = 'none';
-        }
-    }
 
     _checkLikeStatus() {
         this._data.likes.forEach(like => {
@@ -76,11 +76,11 @@ export default class Card {
     };
 
     generateCard() {
-        this._setEventListeners();
-        this._element.querySelector('.element__image').src = this._data.link;
-        this._element.querySelector('.element__image').alt = this._data.name;
-        this._element.querySelector('.element__title').textContent = this._data.name;
         this._changeVisibleRemoveElement();
+        this._setEventListeners();
+        this._imageElement.src = this._data.link;
+        this._imageElement.alt = this._data.name;
+        this._element.querySelector('.element__title').textContent = this._data.name;
         this._checkLikeStatus();
 
         return this._element;

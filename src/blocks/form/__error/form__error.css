@@ -2,9 +2,8 @@
     margin: 0;
     padding: 0;
     margin-left: 36px;
-    margin-top: 5px;
     max-width: 358px;
-    height: 20px;
+    height: 29px;
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
@@ -25,3 +24,7 @@
         max-width: 210px;
     }
 }
+
+.form__error:last-of-type {
+    margin-bottom: 18px;
+  }

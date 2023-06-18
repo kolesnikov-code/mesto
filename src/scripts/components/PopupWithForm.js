@@ -8,6 +8,7 @@ export default class PopupWithForm extends Popup {
         this._formInputList = this._formElement.querySelectorAll('.form__input');
         this._submitButton = this._formElement.querySelector('.form__button-save');
         this._submitButtonDefaultText = this._submitButton.textContent;
+        this._loadingText = 'Сохранение...'
     };
 
     close() {
@@ -23,6 +24,10 @@ export default class PopupWithForm extends Popup {
         return inputValues;
     };
 
+    _renderLoading() {
+        this._submitButton.textContent = 'Сохранение...';
+    };
+
     resetTextSubmitButton() {
         this._submitButton.textContent = this._submitButtonDefaultText;
     }
@@ -33,11 +38,15 @@ export default class PopupWithForm extends Popup {
         });
     }
     
+    // ваш совет видел, но решил сделать анонимный метод 
+    // т.к. меньше кода будет в index, вызывая каждый раз этот метод 
+    // вариант с публичным методом отработаю, просто поджимают сроки 
+    // спасибо вам за развёрнутое ревью и советы, 
     setEventListeners() {
         super.setEventListeners();
         this._formElement.addEventListener('submit', evt => {
             evt.preventDefault();
-            this._submitButton.textContent = 'Сохранение...'
+            this._renderLoading();
             this._formSubmit(this._getInputValues());
         });
     };

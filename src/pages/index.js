@@ -49,7 +49,6 @@ const popupDeleteItem = new PopupWithFormDelete('#popup-delete-item', ({ card, c
       popupDeleteItem.close();
     })
     .catch((error => console.error(`Произошла ошибка при удалении карточки ${error}`)))
-    .finally() 
 }); 
 
 popupDeleteItem.setEventListeners();
@@ -133,9 +132,10 @@ const validatorAddNewItem = new FormValidator(formConfig, addNewItemForm);
 validatorAddNewItem.enableValidation();
 
 const popupAddNewItem = new PopupWithForm('#popup-add-new-item', data => {
-  api.addNewCard(data)
-    .then(res => {
-      content.addItemPrepend(createCard(res));
+  Promise.all([api.getUserInfo(), api.addNewCard(data)])
+    .then(([userData, cardData]) => {
+      cardData.myId = userData._id;
+      content.addItemPrepend(createCard(cardData));
       popupAddNewItem.close()
     })
     .catch((error => console.error(`Произошла ошибка при создании новой карточки ${error}`)))
