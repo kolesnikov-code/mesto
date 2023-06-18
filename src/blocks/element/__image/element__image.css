@@ -1,0 +1,17 @@
+.element__image {
+  width: 282px;
+  height: 282px;
+  overflow: hidden;
+  object-fit: cover;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  background-size: cover;
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .element__image {
+    max-width: 250px;
+    max-height: 250px;
+  }
+}
